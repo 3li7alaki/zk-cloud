@@ -79,12 +79,17 @@ ZK devices are designed to connect to management servers. This project replicate
 - **Event Collection** - Receive and process access events from devices
 - **Protocol Documentation** - Document findings as the protocol is reverse engineered
 
-## 📝 Protocol Documentation
+## 📝 API Documentation
 
-As we decode the ZK protocol, findings are documented in:
-- `docs/protocol-analysis.md` - Packet structure breakdown
-- `docs/command-reference.md` - Available device commands
-- `docs/integration-guide.md` - SaaS integration examples
+### Interactive Documentation
+- **Swagger UI**: `http://localhost:3000/` - Interactive API explorer
+- **Postman Collection**: `docs/zk-cloud.postman_collection.json` - Complete API collection for testing
+
+### Protocol Documentation
+As the ZK protocol is reverse engineered, findings are documented in:
+- `docs/protocol-analysis.md` - HTTP communication patterns and data formats
+- `docs/command-reference.md` - Complete API endpoints and request/response structures  
+- `docs/integration-guide.md` - Implementation guide for building your own server
 
 ## 🤝 Contributing
 

@@ -1,0 +1,15 @@
+{
+    "name": "zk-cloud",
+    "description": "ZK Cloud - Reverse Engineering ZK Biometric Protocol",
+    "author": "Ali AlHalaki",
+    "version": "1.0.0",
+    "scripts": {
+      "dev:backend": "cd backend && npm run start:dev",
+      "dev:emulator": "cd emulator && python emulator.py",
+      "dev": "concurrently \"npm run dev:backend\" \"npm run dev:emulator\"",
+      "install:all": "cd backend && npm install && cd ../emulator && pip install -r requirements.txt"
+    },
+    "devDependencies": {
+      "concurrently": "^8.2.0"
+    }
+  }
