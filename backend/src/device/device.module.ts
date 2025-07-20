@@ -3,10 +3,11 @@ import { DeviceService } from './device.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Device } from './entities/device.entity';
 import { DeviceController } from './device.controller';
+import { Command } from '../command/entities/command.entity';
 
 @Module({
   providers: [DeviceService],
-  imports: [TypeOrmModule.forFeature([Device])],
+  imports: [TypeOrmModule.forFeature([Device, Command])],
   controllers: [DeviceController],
   exports: [DeviceService],
 })

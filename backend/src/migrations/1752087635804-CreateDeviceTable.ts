@@ -10,6 +10,7 @@ export class CreateDeviceTable1752087635804 implements MigrationInterface {
                 "serial_number" character varying NOT NULL,
                 "name" character varying,
                 "push_version" character varying,
+                "fingerprint_version" integer DEFAULT '10',
                 "online" boolean NOT NULL DEFAULT false,
                 "last_heartbeat" TIMESTAMP,
                 "heartbeat" integer NOT NULL DEFAULT '10',

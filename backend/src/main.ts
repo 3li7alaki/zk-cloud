@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { DatabaseExceptionFilter } from './filters/database-exception.filter';
+import { DatabaseExceptionFilter } from './common/filters/database-exception.filter';
 import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
@@ -19,6 +19,7 @@ async function bootstrap() {
   );
 
   app.use(bodyParser.text({ type: 'text/plain', defaultCharset: 'utf-8' }));
+  app.use(bodyParser.text({ type: 'application/octet-stream', defaultCharset: 'utf-8' }));
 
   app.useGlobalFilters(new DatabaseExceptionFilter());
 

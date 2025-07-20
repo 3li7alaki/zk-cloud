@@ -37,14 +37,12 @@ export class DeviceService {
     }
 
     async update(id: string, deviceDto: DeviceCrudDto): Promise<DeviceDto> {
-        const device = await this.deviceRepository.findOneBy({ id });
-        if (!device) {
-            throw new NotFoundException('Device not found');
-        }
+        const device = await this.findOne(id);
         return this.deviceRepository.save({ ...device, ...deviceDto });
     }
 
     async delete(id: string): Promise<void> {
-        await this.deviceRepository.delete(id);
+        const device = await this.findOne(id);
+        await this.deviceRepository.delete(device);
     }
 }

@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, UpdateDateColumn, PrimaryColumn, Generated } from "typeorm";
+import { Command } from "../../command/entities/command.entity";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
@@ -14,6 +15,9 @@ export class Device {
 
     @Column({ nullable: true })
     push_version?: string;
+
+    @Column({ nullable: true })
+    fingerprint_version?: number;
 
     @Column({ default: false })
     online: boolean;
@@ -41,4 +45,9 @@ export class Device {
 
     @Column({ default: 0 })
     transaction_count: number;
+
+    @OneToMany(() => Command, (command) => command.device, {
+        cascade: ["insert", "update", "remove"]
+    })
+    commands: Command[];
 }

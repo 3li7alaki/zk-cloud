@@ -1,32 +1,34 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString } from "class-validator";
+import { ApiProperty, ApiResponseProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsNumber, IsString, IsOptional } from "class-validator";
 
 export class DeviceDto {
-    @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000' })
+    @ApiResponseProperty({ example: '123e4567-e89b-12d3-a456-426614174000' })
     id: string;
-    @ApiProperty({ example: 'CXQW123456789', uniqueItems: true })
+    @ApiResponseProperty({ example: 'CXQW123456789' })
     serial_number: string;
-    @ApiProperty({ example: 'Device Name' })
+    @ApiPropertyOptional({ readOnly: true, example: 'Device Name' })
     name?: string;
-    @ApiProperty({ example: '1.0.0', required: false })
+    @ApiPropertyOptional({ readOnly: true, example: '1.0.0'})
     push_version?: string;
-    @ApiProperty({ example: true })
+    @ApiPropertyOptional({ readOnly: true, example: 10, type: Number })
+    fingerprint_version?: number;
+    @ApiResponseProperty({ example: true })
     online: boolean;
-    @ApiProperty({ example: '2025-07-09T20:58:32.000Z', required: false })
+    @ApiPropertyOptional({ readOnly: true, example: '2025-07-09T20:58:32.000Z', type: Date })
     last_heartbeat?: Date;
-    @ApiProperty({ example: 10 })
+    @ApiResponseProperty({ example: 10, type: Number })
     heartbeat: number;
-    @ApiProperty({ example: 3 })
+    @ApiResponseProperty({ example: 3, type: Number })
     time_zone: number;
-    @ApiProperty({ example: '192.168.1.1', required: false })
+    @ApiPropertyOptional({ readOnly: true, example: '192.168.1.1' })
     ip_address?: string;
-    @ApiProperty({ example: 69 })
+    @ApiResponseProperty({ example: 69, type: Number })
     language: number;
-    @ApiProperty({ example: 1 })
+    @ApiResponseProperty({ example: 1, type: Number })
     user_count: number;
-    @ApiProperty({ example: 1 })
+    @ApiResponseProperty({ example: 1, type: Number })
     fingerprint_count: number;
-    @ApiProperty({ example: 1 })
+    @ApiResponseProperty({ example: 1, type: Number })
     transaction_count: number;
 }
 
@@ -35,11 +37,46 @@ export class DeviceCrudDto {
     @ApiProperty({ example: 'CXQW123456789', uniqueItems: true })
     @IsString()
     serial_number: string;
-    @ApiProperty({ example: 10 })
+    @ApiProperty({ example: 10, type: Number })
     @IsNumber()
     heartbeat: number;
-    @ApiProperty({ example: 3 })
+    @ApiProperty({ example: 3, type: Number })
     @IsNumber()
     time_zone: number;
+    
+    @ApiPropertyOptional({ example: 'Device Name' })
+    @IsString()
+    @IsOptional()
+    name?: string;
+    
+    @ApiPropertyOptional({ example: 1, type: Number })
+    @IsNumber()
+    @IsOptional()
+    transaction_count?: number;
+    
+    @ApiPropertyOptional({ example: 1, type: Number })
+    @IsNumber()
+    @IsOptional()
+    user_count?: number;
+    
+    @ApiPropertyOptional({ example: 1, type: Number })
+    @IsNumber()
+    @IsOptional()
+    fingerprint_count?: number;
+    
+    @ApiPropertyOptional({ example: 69, type: Number })
+    @IsNumber()
+    @IsOptional()
+    language?: number;
+    
+    @ApiPropertyOptional({ example: 10, type: Number })
+    @IsNumber()
+    @IsOptional()
+    fingerprint_version?: number;
+    
+    @ApiPropertyOptional({ example: '192.168.1.1' })
+    @IsString()
+    @IsOptional()
+    ip_address?: string;
 }
     
