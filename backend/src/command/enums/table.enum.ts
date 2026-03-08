@@ -1,0 +1,6 @@
+export enum Tables {
+    ATTENDANCE = 'ATTLOG',
+    FINGERPRINTS = 'FINGERTMP',
+    BIOMETRIC = 'BIODATA',
+    USERS = 'USERINFO',
+}

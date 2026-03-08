@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
 import { Role } from "../enums/role.enum";
 import { v4 as uuidv4 } from 'uuid';
+import { Biodata } from "./biodata.entity";
 
 @Entity()
 export class User {
@@ -21,5 +22,10 @@ export class User {
 
     @Column({ nullable: true })
     card_number?: string;
+
+    @OneToMany(() => Biodata, (biodata) => biodata.user, {
+        eager: true,
+    })
+    biodata: Biodata[];
 }
 

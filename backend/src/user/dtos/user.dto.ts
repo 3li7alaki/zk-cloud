@@ -1,26 +1,30 @@
 import { ApiProperty, ApiPropertyOptional, ApiResponseProperty } from "@nestjs/swagger";
 import { IsEnum, IsOptional, IsString } from "class-validator";
 import { Role } from "../enums/role.enum";
-import { EmptyStringToNull } from "src/common/transformers/empty-string-to-null.transformer";
+import { EmptyStringToNull } from "../../common/transformers/empty-string-to-null.transformer";
+import { BiodataDto } from "./biodata.dto";
 
 export class UserDto {
-    @ApiResponseProperty({ example: '123e4567-e89b-12d3-a456-426614174000' })
+    @ApiProperty({ readOnly: true, example: '123e4567-e89b-12d3-a456-426614174000', description: 'User ID' })
     id: string;
 
-    @ApiResponseProperty({ example: 'ABC-123456' })
+    @ApiProperty({ example: 'ABC-123456', description: 'User PIN identifier' })
     pin: string;
 
-    @ApiResponseProperty({ example: 'John Doe' })
+    @ApiProperty({ example: 'John Doe', description: 'User name' })
     name: string;
 
-    @ApiPropertyOptional({ readOnly: true, example: '1234567890' })
+    @ApiPropertyOptional({ readOnly: true, example: '1234567890', description: 'User password' })
     password?: string;
 
-    @ApiResponseProperty({ example: Role.EMPLOYEE, enum: Role })
+    @ApiProperty({ example: Role.EMPLOYEE, enum: Role, description: 'User role' })
     role: Role;
 
-    @ApiPropertyOptional({ readOnly: true, example: '1234567890' })
+    @ApiPropertyOptional({ readOnly: true, example: '1234567890', description: 'User card number' })
     card_number?: string;
+
+    @ApiResponseProperty({ type: () => [BiodataDto] })
+    biodata: BiodataDto[];
 }
 
 export class UserCrudDto {

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class CreateUserTable1752264324701 implements MigrationInterface {
-    name = 'CreateUserTable1752264324701'
+export class CreateUserTable1752264324702 implements MigrationInterface {
+    name = 'CreateUserTable1752264324702'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
@@ -12,8 +12,8 @@ export class CreateUserTable1752264324701 implements MigrationInterface {
                 "password" character varying,
                 "role" integer NOT NULL,
                 "card_number" character varying,
-                CONSTRAINT "UQ_798cfeabae6730aaf91c3c04632" UNIQUE ("pin"),
-                CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id")
+                CONSTRAINT "UQ_user_pin" UNIQUE ("pin"),
+                CONSTRAINT "PK_user_id" PRIMARY KEY ("id")
             )
         `);
     }

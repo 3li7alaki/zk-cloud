@@ -10,14 +10,23 @@ export class Device {
     @Column({ unique: true })
     serial_number: string;
 
+    @Column()
+    name: string;
+
     @Column({ nullable: true })
-    name?: string;
+    model?: string;
 
     @Column({ nullable: true })
     push_version?: string;
 
-    @Column({ nullable: true })
-    fingerprint_version?: number;
+    @Column({ default: 10 })
+    fingerprint_version: number;
+
+    @Column({ default: 0 })
+    face_version: number;
+
+    @Column({ default: 0 })
+    palm_version: number;
 
     @Column({ default: false })
     online: boolean;
@@ -45,6 +54,13 @@ export class Device {
 
     @Column({ default: 0 })
     transaction_count: number;
+
+    @Column({ default: Date.now() })
+    stamp: Date;
+
+    @Column({ default: Date.now() })
+    op_stamp: Date;
+
 
     @OneToMany(() => Command, (command) => command.device, {
         cascade: ["insert", "update", "remove"]

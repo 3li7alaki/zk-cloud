@@ -1,82 +1,66 @@
-import { ApiProperty, ApiResponseProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsNumber, IsString, IsOptional } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsNumber, IsString } from "class-validator";
+import { CommandDto } from "../../command/dtos/command.dto";
 
 export class DeviceDto {
-    @ApiResponseProperty({ example: '123e4567-e89b-12d3-a456-426614174000' })
+    @ApiProperty({ readOnly: true, example: '123e4567-e89b-12d3-a456-426614174000', description: 'Device ID' })
     id: string;
-    @ApiResponseProperty({ example: 'CXQW123456789' })
+    @ApiProperty({ readOnly: true, example: 'CXQW123456789', description: 'Device serial number' })
     serial_number: string;
-    @ApiPropertyOptional({ readOnly: true, example: 'Device Name' })
-    name?: string;
-    @ApiPropertyOptional({ readOnly: true, example: '1.0.0'})
+    @ApiProperty({ readOnly: true, example: 'Device Name', description: 'Device name' })
+    name: string;
+    @ApiPropertyOptional({ readOnly: true, example: 'Device Model', description: 'Device model' })
+    model?: string;
+    @ApiPropertyOptional({ readOnly: true, example: '1.0.0', description: 'Device push version' })
     push_version?: string;
-    @ApiPropertyOptional({ readOnly: true, example: 10, type: Number })
-    fingerprint_version?: number;
-    @ApiResponseProperty({ example: true })
+    @ApiProperty({ readOnly: true, example: 10, type: Number, description: 'Device fingerprint version' })
+    fingerprint_version: number;
+    @ApiProperty({ readOnly: true, example: 0, type: Number, description: 'Device face version' })
+    face_version: number;
+    @ApiProperty({ readOnly: true, example: 0, type: Number, description: 'Device palm version' })
+    palm_version: number;
+    @ApiProperty({ readOnly: true, example: true, description: 'Device online status' })
     online: boolean;
-    @ApiPropertyOptional({ readOnly: true, example: '2025-07-09T20:58:32.000Z', type: Date })
+    @ApiPropertyOptional({ readOnly: true, example: '2025-07-09T20:58:32.000Z', type: Date, description: 'Device last heartbeat' })
     last_heartbeat?: Date;
-    @ApiResponseProperty({ example: 10, type: Number })
+    @ApiProperty({ example: 10, type: Number, description: 'Device heartbeat' })
     heartbeat: number;
-    @ApiResponseProperty({ example: 3, type: Number })
+    @ApiProperty({ example: 3, type: Number, description: 'Device time zone' })
     time_zone: number;
-    @ApiPropertyOptional({ readOnly: true, example: '192.168.1.1' })
+    @ApiPropertyOptional({ readOnly: true, example: '192.168.1.1', description: 'Device IP address' })
     ip_address?: string;
-    @ApiResponseProperty({ example: 69, type: Number })
+    @ApiProperty({ readOnly: true, example: 69, type: Number, description: 'Device language' })
     language: number;
-    @ApiResponseProperty({ example: 1, type: Number })
+    @ApiProperty({ readOnly: true, example: 1, type: Number, description: 'Device user count' })
     user_count: number;
-    @ApiResponseProperty({ example: 1, type: Number })
+    @ApiProperty({ readOnly: true, example: 1, type: Number, description: 'Device fingerprint count' })
     fingerprint_count: number;
-    @ApiResponseProperty({ example: 1, type: Number })
+    @ApiProperty({ readOnly: true, example: 1, type: Number, description: 'Device transaction count' })
     transaction_count: number;
+    @ApiProperty({ readOnly: true, example: 0, type: Date, description: 'Device stamp' })
+    stamp: Date;
+    @ApiProperty({ readOnly: true, example: 0, type: Date, description: 'Device op stamp' })
+    op_stamp: Date;
+    @ApiProperty({ type: () => [CommandDto], description: 'Device commands' })
+    commands: CommandDto[];
 }
 
 
 export class DeviceCrudDto {
-    @ApiProperty({ example: 'CXQW123456789', uniqueItems: true })
+    @ApiProperty({ example: 'CXQW123456789', uniqueItems: true, description: 'Device serial number' })
     @IsString()
     serial_number: string;
-    @ApiProperty({ example: 10, type: Number })
+
+    @ApiProperty({ example: 10, type: Number, description: 'Device heartbeat' })
     @IsNumber()
     heartbeat: number;
-    @ApiProperty({ example: 3, type: Number })
+
+    @ApiProperty({ example: 3, type: Number, description: 'Device time zone' })
     @IsNumber()
     time_zone: number;
     
-    @ApiPropertyOptional({ example: 'Device Name' })
+    @ApiProperty({ example: 'Device Name', description: 'Device name' })
     @IsString()
-    @IsOptional()
-    name?: string;
-    
-    @ApiPropertyOptional({ example: 1, type: Number })
-    @IsNumber()
-    @IsOptional()
-    transaction_count?: number;
-    
-    @ApiPropertyOptional({ example: 1, type: Number })
-    @IsNumber()
-    @IsOptional()
-    user_count?: number;
-    
-    @ApiPropertyOptional({ example: 1, type: Number })
-    @IsNumber()
-    @IsOptional()
-    fingerprint_count?: number;
-    
-    @ApiPropertyOptional({ example: 69, type: Number })
-    @IsNumber()
-    @IsOptional()
-    language?: number;
-    
-    @ApiPropertyOptional({ example: 10, type: Number })
-    @IsNumber()
-    @IsOptional()
-    fingerprint_version?: number;
-    
-    @ApiPropertyOptional({ example: '192.168.1.1' })
-    @IsString()
-    @IsOptional()
-    ip_address?: string;
+    name: string;
 }
     
