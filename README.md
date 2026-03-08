@@ -1,108 +1,129 @@
-# 🔐 ZK Cloud - Reverse Engineering ZK Biometric Protocol
+# ZK Cloud
 
-> **Open-source ZK device management server for learning and integration.** Reverse engineer and replicate ZK device communication protocols, giving developers control over biometric devices and enabling custom integrations.
+Open-source ZK biometric device management server. Reverse-engineered iClock protocol implementation that lets you run your own server for ZK fingerprint, face, and palm recognition devices.
 
-![NestJS](https://img.shields.io/badge/Backend-NestJS-red)
+![NestJS](https://img.shields.io/badge/Backend-NestJS_11-red)
 ![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue)
 ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791)
-![Reverse Engineering](https://img.shields.io/badge/Purpose-Reverse%20Engineering-orange)
-![Python](https://img.shields.io/badge/Emulator-Python-green)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## 🚀 What This Does
+## What This Does
 
-ZK Cloud provides a device management server that ZK devices can connect to, offering:
-
-1. **🔍 Device Management Server** - Controllable alternative to proprietary management software
-2. **📡 Device Communication** - Handle heartbeat requests and command responses  
-3. **🔗 Custom Integration** - Learn how to integrate ZK functionality into your applications
-4. **📊 Protocol Documentation** - Understand and replicate device communication patterns
-
-## 🏗️ Architecture
-
-Simple single-application architecture for learning:
+ZK biometric devices (fingerprint scanners, face recognition terminals) are designed to connect to a management server. This project replicates that server, giving you full control over your devices without proprietary software.
 
 ```
 ┌─────────────────┐    HTTP     ┌─────────────────┐
-│    ZK Device    │────────────>│   NestJS App    │
-│ (Real/Emulated) │             │   Port: 3000    │
-│                 │             │                 │
-│ • Fingerprint   │<────────────│ • Protocol      │
-│ • Face recog    │  Commands   │   decoding      │
-│ • Access events │  via        │ • HTTP endpoints│
-│ • Heartbeat     │  heartbeat  │ • Command queue │
-│   requests      │  response   │                 │
-└─────────────────┘             └─────────────────┘
+│    ZK Device    │────────────>│   ZK Cloud      │
+│                 │             │   (NestJS)      │
+│ • Fingerprint   │<────────────│                 │
+│ • Face recog    │  Commands   │ • iClock proto  │
+│ • Palm print    │  via poll   │ • REST API      │
+│ • Attendance    │  response   │ • Swagger docs  │
+└─────────────────┘             └────────┬────────┘
                                          │
                                          ▼
                                 ┌─────────────────┐
                                 │   PostgreSQL    │
                                 │                 │
-                                │ • Device Mgmt   │
-                                │ • Raw packets   │
-                                │ • Decoded data  │
-                                │ • Access logs   │
+                                │ • Devices       │
+                                │ • Users         │
+                                │ • Biometrics    │
+                                │ • Attendance    │
+                                │ • Commands      │
                                 └─────────────────┘
 ```
 
-## 🛠️ Tech Stack
+### Features
 
-**Backend**
-- **Framework**: NestJS with TypeScript
-- **Database**: PostgreSQL 
-- **Communication**: HTTP-based endpoints
-- **Protocol**: Custom ZK device protocol (reverse engineered)
+- **Device Management** — Register, monitor, and control ZK biometric devices
+- **iClock Protocol** — Full reverse-engineered implementation of the ZK device HTTP protocol
+- **User Management** — Create and sync users with role-based access (Employee, Enroller, Admin)
+- **Biometric Support** — Fingerprint, face, and palm template storage and device synchronization
+- **Command System** — Queue and deliver commands to devices (query, sync, enroll, delete, reboot)
+- **Attendance Tracking** — Collect and store access events from devices in real time
+- **API Documentation** — Interactive Swagger UI at the server root
 
-**Device Emulator**
-- **Language**: Python
-- **Config**: JSON-based device simulation
-- **Interface**: Terminal commands for testing
-- **Purpose**: Validate protocol understanding
+## Tech Stack
 
-## 🎯 Why This Matters
+- **Runtime**: Node.js 20+
+- **Framework**: NestJS 11
+- **Language**: TypeScript (strict mode)
+- **Database**: PostgreSQL with TypeORM
+- **Docs**: Swagger / OpenAPI
 
-Instead of being locked into proprietary device management software, developers can:
+## Quick Start
 
-- **Take control** - Run your own server that ZK devices connect to
-- **Learn the protocol** - Understand how devices communicate and behave
-- **Build integrations** - Connect biometric access to your existing systems
-- **Customize functionality** - Implement features that proprietary software doesn't offer
+### With Docker (recommended)
 
-ZK devices expect to communicate with a management server. This project replicates that server behavior while documenting the undocumented protocol.
+```bash
+git clone https://github.com/3li7alaki/zk-cloud.git
+cd zk-cloud
+docker compose up
+```
 
-## 🔧 How It Works
+The API will be available at `http://localhost:3000`.
 
-ZK devices are designed to connect to management servers. This project replicates that behavior:
+### Manual Setup
 
-- **Device Registration** - Accept new ZK devices trying to connect
-- **Heartbeat Handling** - Respond to periodic device status checks
-- **Command Delivery** - Send management commands (add/delete users, etc.) via heartbeat responses
-- **Event Collection** - Receive and process access events from devices
-- **Protocol Documentation** - Document findings as the protocol is reverse engineered
+**Prerequisites**: Node.js 20+, PostgreSQL
 
-## 📝 API Documentation
+```bash
+git clone https://github.com/3li7alaki/zk-cloud.git
+cd zk-cloud/backend
 
-### Interactive Documentation
-- **Swagger UI**: `http://localhost:3000/` - Interactive API explorer
-- **Postman Collection**: `docs/zk-cloud.postman_collection.json` - Complete API collection for testing
+# Configure database
+cp .env.example .env
+# Edit .env with your PostgreSQL credentials
+
+# Install and run
+npm install
+npm run migration:run
+npm run start:dev
+```
+
+### Connecting a Device
+
+1. Register the device via the API: `POST /devices` with the device's serial number
+2. Configure the device to point to your server's IP on port 3000
+3. The device will connect automatically via the iClock protocol
+
+## API Documentation
+
+### Interactive Docs
+
+Start the server and open `http://localhost:3000` for the Swagger UI.
+
+### Authentication
+
+Management endpoints (devices, users, commands, attendance) support API key authentication. Set `API_KEY` in your `.env` file, then pass it as a Bearer token or `x-api-key` header. When `API_KEY` is not set, endpoints are open.
+
+Device protocol endpoints (`/iclock/*`) use serial number authentication and do not require an API key.
 
 ### Protocol Documentation
-As the ZK protocol is reverse engineered, findings are documented in:
-- `docs/protocol-analysis.md` - HTTP communication patterns and data formats
-- `docs/command-reference.md` - Complete API endpoints and request/response structures  
-- `docs/integration-guide.md` - Implementation guide for building your own server
 
-## 🤝 Contributing
+The `docs/` directory contains detailed reverse-engineering documentation:
 
-This is a learning project! Contributions welcome for:
-- Protocol analysis and documentation
-- Device emulation improvements
-- Integration examples
-- Reverse engineering techniques
+- **[Protocol Analysis](docs/protocol-analysis.md)** — HTTP communication patterns, data formats, device lifecycle
+- **[Command Reference](docs/command-reference.md)** — Complete command syntax for device operations
+- **[Integration Guide](docs/integration-guide.md)** — Guide for building your own ZK device server
 
-## 📄 License
+## Project Structure
 
-MIT - Learn, decode, and document.
+```
+backend/src/
+├── device/        # Device registration and health monitoring
+├── user/          # User management and biometric data
+├── command/       # Command queue and protocol command builder
+├── attendance/    # Attendance event recording
+├── iclock/        # iClock protocol handler (device communication)
+├── common/        # Shared guards, filters, DTOs
+└── migrations/    # Database migrations
+```
 
----
+## Contributing
 
-**🎉 Reverse engineering proprietary protocols, one packet at a time. Alhamdulillah!**
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on setting up your development environment, running tests, and submitting pull requests.
+
+## License
+
+MIT — see [LICENSE](LICENSE) for details.
