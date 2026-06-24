@@ -5,7 +5,7 @@ export class IdParamDto {
   @ApiProperty({
     description: 'Numeric ID',
     example: '123',
-    type: Number
+    type: Number,
   })
   @IsNumberString()
   id: number;

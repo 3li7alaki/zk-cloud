@@ -7,9 +7,9 @@ import { User } from './entities/user.entity';
 import { Biodata } from './entities/biodata.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Biodata])],
-    controllers: [UserController],
-    providers: [UserService, BiodataService],
-    exports: [UserService, BiodataService],
+  imports: [TypeOrmModule.forFeature([User, Biodata])],
+  controllers: [UserController],
+  providers: [UserService, BiodataService],
+  exports: [UserService, BiodataService],
 })
 export class UserModule {}

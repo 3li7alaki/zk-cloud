@@ -1,4 +1,4 @@
-import { ExecutionContext, HttpException } from '@nestjs/common';
+import { HttpException } from '@nestjs/common';
 import { DeviceContextGuard } from './device-context.guard';
 import { DeviceService } from '../device.service';
 

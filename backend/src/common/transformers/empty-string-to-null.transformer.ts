@@ -5,10 +5,10 @@ import { Transform } from 'class-transformer';
  * Usage: @EmptyStringToNull() on class property
  */
 export function EmptyStringToNull() {
-    return Transform(({ value }) => {
-        if (value === '') {
-            return null;
-        }
-        return value;
-    });
+  return Transform(({ value }: { value: unknown }) => {
+    if (value === '') {
+      return null;
+    }
+    return value;
+  });
 }

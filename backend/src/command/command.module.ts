@@ -10,9 +10,13 @@ import { DeviceModule } from '../device/device.module';
 import { UserModule } from '../user/user.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Command, CommandTransaction, Device]), DeviceModule, UserModule],
-    providers: [CommandService, CommanderService],
-    exports: [CommandService, CommanderService],
-    controllers: [CommandController],
+  imports: [
+    TypeOrmModule.forFeature([Command, CommandTransaction, Device]),
+    DeviceModule,
+    UserModule,
+  ],
+  providers: [CommandService, CommanderService],
+  exports: [CommandService, CommanderService],
+  controllers: [CommandController],
 })
 export class CommandModule {}

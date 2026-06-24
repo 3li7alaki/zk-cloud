@@ -7,9 +7,9 @@ import { User } from 'src/user/entities/user.entity';
 import { Device } from 'src/device/entities/device.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Attendance, User, Device])],
-    controllers: [AttendanceController],
-    providers: [AttendanceService],
-    exports: [AttendanceService],
+  imports: [TypeOrmModule.forFeature([Attendance, User, Device])],
+  controllers: [AttendanceController],
+  providers: [AttendanceService],
+  exports: [AttendanceService],
 })
 export class AttendanceModule {}

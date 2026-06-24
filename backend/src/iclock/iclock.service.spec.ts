@@ -120,7 +120,7 @@ describe('IclockService', () => {
 
       expect(mockUserService.upsert).toHaveBeenCalledWith(
         expect.objectContaining({
-          pin: 123,
+          pin: '123',
           name: 'John',
           role: 0,
         }),
@@ -137,7 +137,7 @@ describe('IclockService', () => {
       await service.operations(mockDevice as Device, body);
 
       expect(mockBiodataService.processTemplate).toHaveBeenCalledWith(
-        123,
+        '123',
         1,
         1,
         0,
@@ -159,7 +159,7 @@ describe('IclockService', () => {
       await service.operations(mockDevice as Device, body);
 
       expect(mockBiodataService.processTemplate).toHaveBeenCalledWith(
-        123,
+        '123',
         9,
         0,
         4,

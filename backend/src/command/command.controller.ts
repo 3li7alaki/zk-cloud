@@ -6,7 +6,6 @@ import {
   Query,
   Body,
   Delete,
-  Put,
   UseGuards,
 } from '@nestjs/common';
 import { CommandService } from './command.service';

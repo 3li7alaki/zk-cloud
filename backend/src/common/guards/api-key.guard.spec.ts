@@ -14,11 +14,14 @@ describe('ApiKeyGuard', () => {
     process.env = originalEnv;
   });
 
-  const createMockContext = (headers: Record<string, string> = {}): ExecutionContext => ({
-    switchToHttp: () => ({
-      getRequest: () => ({ headers }),
-    }),
-  }) as any;
+  const createMockContext = (
+    headers: Record<string, string> = {},
+  ): ExecutionContext =>
+    ({
+      switchToHttp: () => ({
+        getRequest: () => ({ headers }),
+      }),
+    }) as any;
 
   it('should allow request when API_KEY is not configured', () => {
     delete process.env.API_KEY;

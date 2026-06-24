@@ -1,10 +1,10 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CreateDeviceTable1752087635801 implements MigrationInterface {
-    name = 'CreateDeviceTable1752087635801'
+  name = 'CreateDeviceTable1752087635801';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             CREATE TABLE "device" (
                 "id" uuid NOT NULL,
                 "serial_number" character varying NOT NULL,
@@ -29,12 +29,11 @@ export class CreateDeviceTable1752087635801 implements MigrationInterface {
                 CONSTRAINT "PK_device_id" PRIMARY KEY ("id")
             )
         `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             DROP TABLE "device"
         `);
-    }
-
+  }
 }

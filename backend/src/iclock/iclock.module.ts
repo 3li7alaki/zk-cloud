@@ -10,12 +10,10 @@ import { AttendanceModule } from 'src/attendance/attendance.module';
 @Module({
   controllers: [IclockController],
   providers: [IclockService],
-  imports: [DeviceModule, CommandModule, UserModule, AttendanceModule]
+  imports: [DeviceModule, CommandModule, UserModule, AttendanceModule],
 })
 export class IclockModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(IclockMiddleware)
-      .forRoutes(IclockController);
+    consumer.apply(IclockMiddleware).forRoutes(IclockController);
   }
 }

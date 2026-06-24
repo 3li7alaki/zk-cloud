@@ -54,11 +54,6 @@ export class UserService {
     return this.create(userDto);
   }
 
-  async exists(pin: string): Promise<boolean> {
-    const user = await this.userRepository.findOneBy({ pin });
-    return !!user;
-  }
-
   async findExistingPins(pins: string[]): Promise<string[]> {
     if (pins.length === 0) return [];
 

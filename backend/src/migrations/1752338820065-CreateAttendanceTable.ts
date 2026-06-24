@@ -1,10 +1,10 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CreateAttendanceTable1752338820065 implements MigrationInterface {
-    name = 'CreateAttendanceTable1752338820065'
+  name = 'CreateAttendanceTable1752338820065';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             CREATE TABLE "attendance" (
                 "id" uuid NOT NULL,
                 "user_pin" character varying NOT NULL,
@@ -16,34 +16,34 @@ export class CreateAttendanceTable1752338820065 implements MigrationInterface {
             )
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE INDEX "IDX_attendance_user_pin" ON "attendance" ("user_pin")
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE INDEX "IDX_attendance_device_id" ON "attendance" ("device_id")
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE INDEX "IDX_attendance_time" ON "attendance" ("time")
         `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             DROP INDEX "IDX_attendance_time"
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP INDEX "IDX_attendance_device_id"
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP INDEX "IDX_attendance_user_pin"
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TABLE "attendance"
         `);
-    }
+  }
 }

@@ -1,10 +1,10 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CreateCommandTable1752336820063 implements MigrationInterface {
-    name = 'CreateCommandTable1752336820063'
+  name = 'CreateCommandTable1752336820063';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             CREATE TABLE "command" (
                 "id" SERIAL NOT NULL,
                 "command" character varying NOT NULL,
@@ -19,19 +19,18 @@ export class CreateCommandTable1752336820063 implements MigrationInterface {
                 CONSTRAINT "PK_command_id" PRIMARY KEY ("id")
             )
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             ALTER TABLE "command"
             ADD CONSTRAINT "FK_command_device_id" FOREIGN KEY ("device_id") REFERENCES "device"("id") ON DELETE CASCADE ON UPDATE NO ACTION
         `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             ALTER TABLE "command" DROP CONSTRAINT "FK_command_device_id"
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TABLE "command"
         `);
-    }
-
+  }
 }

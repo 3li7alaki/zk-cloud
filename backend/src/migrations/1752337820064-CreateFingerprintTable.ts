@@ -1,10 +1,10 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CreateFingerprintTable1752337820064 implements MigrationInterface {
-    name = 'CreateFingerprintTable1752337820064'
+  name = 'CreateFingerprintTable1752337820064';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             CREATE TABLE "fingerprint" (
                 "user_pin" character varying NOT NULL,
                 "finger" integer NOT NULL,
@@ -16,11 +16,11 @@ export class CreateFingerprintTable1752337820064 implements MigrationInterface {
                 CONSTRAINT "FK_fingerprint_device_id" FOREIGN KEY ("device_id") REFERENCES "device"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
             )
         `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             DROP TABLE "fingerprint"
         `);
-    }
+  }
 }

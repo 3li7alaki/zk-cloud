@@ -5,3 +5,4 @@ coverage/
 *.js.map
 .DS_Store
 docs/openapi.json
+.mint/
